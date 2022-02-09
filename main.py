@@ -20,7 +20,6 @@ class Main(QMainWindow):
 
     def get_picture(self):
         self.map_request = f"http://static-maps.yandex.ru/1.x/?ll={self.lineEdit.text()}&spn={self.lineEdit_4.text()}&l=sat"
-        print(self.map_request)
         self.response = requests.get(self.map_request)
         self.map_file = "map.png"
         with open(self.map_file, "wb") as file:
