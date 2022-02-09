@@ -64,7 +64,10 @@ def get_picture(address, with_label=False):
 
     # image = Image.open(BytesIO(response.content))
     image = Image.open(BytesIO(response.content))
-    return image
+    map_file = "map.png"
+    with open(map_file, "wb") as file:
+        file.write(response.content)
+    return map_file
 
 
 class Main(QMainWindow):
