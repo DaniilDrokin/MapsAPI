@@ -7,21 +7,25 @@ from PyQt5 import uic
 from PyQt5.Qt import *
 
 
-def get_picture():
-    map_request = "http://static-maps.yandex.ru/1.x/?ll=133.693800,-25.794900&spn=15,15&l=sat"
-    response = requests.get(map_request)
-    map_file = "map.png"
-    with open(map_file, "wb") as file:
-        file.write(response.content)
-    return map_file
-
 
 class Main(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('gg.ui', self)
-        image = get_picture()
-        self.label.setPixmap(QPixmap(image))
+        self.initUI()
+
+    
+    def initUI(self):
+        self.pushButton.clicked.connect(self.get_picture)
+
+    def get_picture(self):
+        self.map_request = f"http://static-maps.yandex.ru/1.x/?ll={self.lineEdit.text()}&spn={self.lineEdit_4.text()}&l=sat"
+        print(self.map_request)
+        self.response = requests.get(self.map_request)
+        self.map_file = "map.png"
+        with open(self.map_file, "wb") as file:
+            file.write(self.response.content)
+        self.MAP.setPixmap(QPixmap(self.map_file))
 
 
 if __name__ == '__main__':
