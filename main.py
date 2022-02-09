@@ -3,13 +3,8 @@ from io import BytesIO
 
 import requests
 from PIL import Image
-
-
-# Этот класс поможет нам сделать картинку из потока байт
-
-# Пусть наше приложение предполагает запуск:
-# python search.py Москва, ул. Ак. Королева, 12
-# Тогда запрос к геокодеру формируется следующим образом:
+from PyQt5 import uic
+from PyQt5.Qt import *
 
 
 def get_toponym(address):
@@ -67,10 +62,24 @@ def get_picture(address, with_label=False):
     # ... и выполняем запрос
     response = requests.get(map_api_server, params=map_params)
 
-    Image.open(BytesIO(response.content)).show()
-    # Создадим картинку
-    # и тут же ее покажем встроенным просмотрщиком операционной системы
+    # image = Image.open(BytesIO(response.content))
+    image = Image.open(BytesIO(response.content))
+    return image
 
 
-address = " ".join(sys.argv[1:])
-get_picture(address, with_label=True)
+class Main(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi('gg.ui', self)
+        # address = " ".join(sys.argv[1:])
+        address = "python3 main.py Moscow"
+        if address:
+            image = get_picture(address, with_label=True)
+            self.label.setPixmap(QPixmap(image))
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex1 = Main()
+    ex1.show()
+    sys.exit(app.exec_())
