@@ -16,7 +16,12 @@ class Main(QMainWindow):
         self.map_request = ''
         self.response = ''
         self.pushButton.clicked.connect(self.get_picture)
+        self.pushButton0.clicked.connect(self.make_cnt)
+        self.pushButton1.clicked.connect(self.make_cnt)
+        self.pushButton2.clicked.connect(self.make_cnt)
         self.map_file = "map.png"
+        self.type = ['sat', 'map', 'sat,skl']
+        self.cnt = 0
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Up and self.zoom1 < 25.0 and self.zoom2 < 25.0:
@@ -29,13 +34,18 @@ class Main(QMainWindow):
             self.zoom2 -= 2
             self.get_picture()
 
+    def make_cnt(self):
+        if not self.flag:
+            self.cnt = int(self.sender().objectName()[-1])
+            self.get_picture()
+
     def get_picture(self):
         if self.flag:
             self.coord = self.lineEdit.text()
             self.zoom1 = float(self.lineEdit_4.text().split(',')[0])
             self.zoom2 = float(self.lineEdit_4.text().split(',')[1])
             self.flag = False
-        self.map_request = f"http://static-maps.yandex.ru/1.x/?ll={self.coord}&spn={self.zoom1},{self.zoom2}&l=sat"
+        self.map_request = f"http://static-maps.yandex.ru/1.x/?ll={self.coord}&spn={self.zoom1},{self.zoom2}&l={self.type[self.cnt]}"
         self.response = requests.get(self.map_request)
         with open(self.map_file, "wb") as file:
             file.write(self.response.content)

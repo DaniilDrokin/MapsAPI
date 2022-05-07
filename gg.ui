@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>665</width>
-    <height>653</height>
+    <width>995</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -796,6 +796,45 @@ color: rgb(210, 210, 210);</string>
                    </property>
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
+                   </property>
+                  </widget>
+                  <widget class="QPushButton" name="pushButton1">
+                   <property name="geometry">
+                    <rect>
+                     <x>610</x>
+                     <y>10</y>
+                     <width>91</width>
+                     <height>91</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>схема</string>
+                   </property>
+                  </widget>
+                  <widget class="QPushButton" name="pushButton2">
+                   <property name="geometry">
+                    <rect>
+                     <x>860</x>
+                     <y>10</y>
+                     <width>91</width>
+                     <height>91</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>гибрид</string>
+                   </property>
+                  </widget>
+                  <widget class="QPushButton" name="pushButton0">
+                   <property name="geometry">
+                    <rect>
+                     <x>740</x>
+                     <y>10</y>
+                     <width>91</width>
+                     <height>91</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>спутник</string>
                    </property>
                   </widget>
                  </widget>
