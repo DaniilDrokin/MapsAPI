@@ -9,7 +9,8 @@ class Main(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('gg.ui', self)
-        self.coord = ''
+        self.coord1 = 0.0
+        self.coord2 = 0.0
         self.zoom1 = 0.0
         self.zoom2 = 0.0
         self.flag = True
@@ -34,6 +35,22 @@ class Main(QMainWindow):
             self.zoom2 -= 2
             self.get_picture()
 
+        if event.key() == Qt.Key_W and self.coord2 < 70:
+            self.coord2 += 1
+            self.get_picture()
+
+        if event.key() == Qt.Key_S and self.coord2 > -70:
+            self.coord2 -= 1
+            self.get_picture()
+
+        if event.key() == Qt.Key_A:
+            self.coord1 -= 1
+            self.get_picture()
+
+        if event.key() == Qt.Key_D:
+            self.coord1 += 1
+            self.get_picture()
+
     def make_cnt(self):
         if not self.flag:
             self.cnt = int(self.sender().objectName()[-1])
@@ -41,11 +58,12 @@ class Main(QMainWindow):
 
     def get_picture(self):
         if self.flag:
-            self.coord = self.lineEdit.text()
+            self.coord1 = float(self.lineEdit.text().split(',')[0])
+            self.coord2 = float(self.lineEdit.text().split(',')[0])
             self.zoom1 = float(self.lineEdit_4.text().split(',')[0])
             self.zoom2 = float(self.lineEdit_4.text().split(',')[1])
             self.flag = False
-        self.map_request = f"http://static-maps.yandex.ru/1.x/?ll={self.coord}&spn={self.zoom1},{self.zoom2}&l={self.type[self.cnt]}"
+        self.map_request = f"http://static-maps.yandex.ru/1.x/?ll={self.coord1},{self.coord2}&spn={self.zoom1},{self.zoom2}&l={self.type[self.cnt]}"
         self.response = requests.get(self.map_request)
         with open(self.map_file, "wb") as file:
             file.write(self.response.content)
